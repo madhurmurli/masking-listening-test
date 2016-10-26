@@ -129,7 +129,8 @@ function begintestbutton_Callback(hObject, eventdata, handles)
 
 testConditions = generateTestConditions();
 subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
-save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject'); 
+save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject');
 
-a = 6;
+close(gcf)
+listeningtestGUI
 
