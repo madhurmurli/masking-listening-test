@@ -23,8 +23,8 @@ end
 p=0;
  startBackground(s);
 
-while(p<2)
-    hwhite = dsp.ColoredNoise('Color','pink','SamplesPerFrame',fs);
+while(p<5)
+    hwhite = dsp.ColoredNoise('Color','pink','SamplesPerFrame',fs*2);
     rng default;
     x = step(hwhite);
     x=x./max(abs(x));
