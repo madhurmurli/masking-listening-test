@@ -10,8 +10,7 @@ classdef Subject < handle
     % Evan Shenkman
    
     properties (SetAccess = private)
-        FirstName;                  % First Name of the subject
-        LastName;                   % Last Name of the subject
+        Name;                       % Name of the subject
         ID;                         % An arbitrary ID for the subject
         
         % Whatever other information we want....
@@ -20,9 +19,8 @@ classdef Subject < handle
     end
     
     methods (Static)
-        function obj = Subject(fname, lname, id, tc)
-            obj.FirstName = fname;
-            obj.LastName = lname;
+        function obj = Subject(name, id, tc)
+            obj.Name = name;
             obj.ID = id;
             
             obj.TestConditions = tc;

@@ -126,3 +126,10 @@ function begintestbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % this button should open the listening test gui specific to the subject
+
+testConditions = generateTestConditions();
+subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
+save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject'); 
+
+a = 6;
+
