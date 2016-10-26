@@ -22,7 +22,7 @@ function varargout = listeningtestGUI(varargin)
 
 % Edit the above text to modify the response to help listeningtestGUI
 
-% Last Modified by GUIDE v2.5 26-Oct-2016 16:59:18
+% Last Modified by GUIDE v2.5 26-Oct-2016 17:45:47
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -79,7 +79,7 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% lower the dB by 5 dBfs
+% lower the target by 5 dBfs, load a new target into the test
 
 
 % --- Executes on button press in nobutton.
@@ -88,6 +88,8 @@ function nobutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+% raise the target by 10 dBfs, load a new target into the test
+
 
 % --- Executes on button press in startbutton.
 function startbutton_Callback(hObject, eventdata, handles)
@@ -95,9 +97,23 @@ function startbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+% begin the noise and enable play target button
 
-% --- Executes on button press in stopbutton.
-function stopbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to stopbutton (see GCBO)
+
+% --- Executes on button press in nextcondbutton.
+function nextcondbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to nextcondbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% enabled when the 50% hearing level has been acheived thru 2-up-1-down
+% when pushed, store the results somewhere for the particular subject
+
+
+% --- Executes on button press in playtargetbutton.
+function playtargetbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to playtargetbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% play the target signal
