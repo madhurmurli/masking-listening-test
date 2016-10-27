@@ -81,16 +81,11 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% lower the target by 5 dBfs, load a new target into the test
-assignin('base', 'testConditionIndex', evalin('base', 'testConditionIndex + 1'));
-try
-    handles.targetsignaltext.String = ['Alarm File: ' evalin('base', 'subject.TestConditions{testConditionIndex}.TargetFile')];
-    handles.masklvltext.String = ['Mask Level: ', num2str(evalin('base', 'subject.TestConditions{testConditionIndex}.MaskLevel')), 'dB'];
-catch
-    disp('Experiment is over mothafukkkkka');
-    close(gcf);
-end
+% lower the target by 3 dBfs, load a new target into the test
 
+% Modify the current Test Condition....
+% Set the TargetLevel to 3dB lower than the preivous state
+% Increment the 1up, 1down pivot counter
 
 
 % --- Executes on button press in nobutton.
@@ -99,26 +94,9 @@ function nobutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% raise the target by 10 dBfs, load a new target into the test
+% raise the target by 3 dBfs, load a new target into the test
 
-
-% --- Executes on button press in startbutton.
-function startbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to startbutton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% begin the noise and enable play target button
-
-
-% --- Executes on button press in nextcondbutton.
-function nextcondbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to nextcondbutton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% enabled when the 50% hearing level has been acheived thru 2-up-1-down
-% when pushed, store the results somewhere for the particular subject
+% Set the TargetLevel to 3dB higher than the preivous state
 
 
 % --- Executes on button press in playtargetbutton.
@@ -128,3 +106,24 @@ function playtargetbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % play the target signal
+
+% Check if the Test Condition pivot counter exceeds 6 or 8
+%       if it does...
+%           move to the next TestCondition
+%
+%       if it does not...
+%           generate the signal...
+
+% Calls PinkNoiseGenerator and sounds a test signal for the listener
+% Greys out all buttons until signal stops
+
+
+% TODO: MOVE INTO TEST CONDITION OBJECT
+% assignin('base', 'testConditionIndex', evalin('base', 'testConditionIndex + 1'));
+% try
+%     handles.targetsignaltext.String = ['Alarm File: ' evalin('base', 'subject.TestConditions{testConditionIndex}.TargetFile')];
+%     handles.masklvltext.String = ['Mask Level: ', num2str(evalin('base', 'subject.TestConditions{testConditionIndex}.MaskLevel')), 'dB'];
+% catch
+%     disp('Experiment is over mothafukkkkka');
+%     close(gcf);
+% end

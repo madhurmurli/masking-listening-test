@@ -136,7 +136,7 @@ end
 
 testConditions = generateTestConditions();
 subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
-assignin('base', 'subject', subject);
+assignin('base', 'subjesubct', subject);
 assignin('base', 'testConditionIndex', 1);
 %save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject');
 
