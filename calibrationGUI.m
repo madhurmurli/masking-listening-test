@@ -97,7 +97,9 @@ end
 
 % if the dbspl is valid pass it to the testconfig
 TestConfig.CalibrationLevel(dbspl);
+% launch enroll subj
 close(gcf)
+enrollsubjectGUI
 
 
 function dbedittext_Callback(hObject, eventdata, handles)
