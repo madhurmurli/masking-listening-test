@@ -8,12 +8,10 @@ fs=samplingRate;
     rng default;
      pink_noise = step(hpink);
     pink_noise=pink_noise./max(abs(pink_noise));
-    startIndex=fs/2+1;
-    endIndex=startIndex+size(testSignal,1)-1;
-    testSig=zeros(size(testSignal,1)+fs,1);
-    testSig(startIndex:endIndex)=testSignal;
-    %testSignal=[zeros(fs/2,1) testSignal zeros(fs/2,1)];
-    outAudio=maskerLevel.*pink_noise+maskeeLevel.*testSig;
+    testSig=zeros(size(testSignal,1),1);
+    tes
+    testSignal=[zeros(fs/2,1) testSignal zeros(fs/2,1)];
+    outAudio=maskerLevel.*pink_noise+maskeeLevel.*testSignal;
     soundsc(outAudio,fs);
 out=1.0;
 end
