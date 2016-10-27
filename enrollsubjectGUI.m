@@ -22,7 +22,7 @@ function varargout = enrollsubjectGUI(varargin)
 
 % Edit the above text to modify the response to help enrollsubjectGUI
 
-% Last Modified by GUIDE v2.5 26-Oct-2016 23:53:38
+% Last Modified by GUIDE v2.5 27-Oct-2016 14:55:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -82,8 +82,6 @@ function subjnameedit_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of subjnameedit as text
 %        str2double(get(hObject,'String')) returns contents of subjnameedit as a double
 
-a = 6;
-
 
 
 % --- Executes during object creation, after setting all properties.
@@ -128,17 +126,19 @@ function begintestbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% this button should open the listening test gui specific to the subject
+% Disable the Continue button
+handles.begintestbutton.Enable = 'off';
 
 if isnan(str2double(handles.subjidnumedit.String))
-    return
+    handles.begintestbutton.Enable = 'on';
+    
+else
+    testConditions = generateTestConditions();
+    subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
+    assignin('base', 'subject', subject);
+    assignin('base', 'testConditionIndex', 1);
+
+    handles.begintestbutton.Enable = 'on';
+    close(gcf)
+    listeningtestGUI
 end
-
-testConditions = generateTestConditions();
-subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
-assignin('base', 'subject', subject);
-assignin('base', 'testConditionIndex', 1);
-%save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject');
-
-close(gcf)
-listeningtestGUI
