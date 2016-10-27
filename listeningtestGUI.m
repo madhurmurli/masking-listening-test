@@ -22,7 +22,7 @@ function varargout = listeningtestGUI(varargin)
 
 % Edit the above text to modify the response to help listeningtestGUI
 
-% Last Modified by GUIDE v2.5 26-Oct-2016 17:45:47
+% Last Modified by GUIDE v2.5 27-Oct-2016 13:34:20
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,13 +55,20 @@ function listeningtestGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for listeningtestGUI
 handles.output = hObject;
 
+% Adding State Variables to GUI
+handles.curTestCondition = evalin('base', 'subject.TestConditions{testConditionIndex}');
+handles.isPlaying = false;
+handles.yesbutton.Enable = 'off';
+handles.nobutton.Enable = 'off';
+
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes listeningtestGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-handles.targetsignaltext.String = ['Alarm File: ' evalin('base', 'subject.TestConditions{testConditionIndex}.TargetFile')];
-handles.masklvltext.String = ['Mask Level: ', num2str(evalin('base', 'subject.TestConditions{testConditionIndex}.MaskLevel')), 'dB'];
+assignin('base', 'curTestCondition', handles.curTestCondition);
+handles.targetsignaltext.String = ['Alarm File: ' handles.curTestCondition.TargetFile];
+handles.masklvltext.String = ['Mask Level: ', num2str(handles.curTestCondition.MaskLevel), 'dB'];
 
 
 % --- Outputs from this function are returned to the command line.
@@ -81,11 +88,25 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% lower the target by 3 dBfs, load a new target into the test
-
 % Modify the current Test Condition....
 % Set the TargetLevel to 3dB lower than the preivous state
 % Increment the 1up, 1down pivot counter
+
+handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel - TestConfig.NumDown * TestConfig.StepSizeDB;
+
+if handles.curTestCondition.Finished
+    handles.playtargetbutton.String = 'Continue to Next Alarm';
+    
+    fprintf('The measured threshold of audibility was: %d dB', handles.curTestCondition.TargetLevel);
+else
+    disp(handles.curTestCondition.TargetLevel)
+end
+
+handles.isPlaying = false;
+handles.playtargetbutton.Enable = 'on';
+handles.yesbutton.Enable = 'off';
+handles.nobutton.Enable = 'off';
+
 
 
 % --- Executes on button press in nobutton.
@@ -94,9 +115,22 @@ function nobutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% raise the target by 3 dBfs, load a new target into the test
-
 % Set the TargetLevel to 3dB higher than the preivous state
+
+handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel + TestConfig.NumUp * TestConfig.StepSizeDB;
+
+if handles.curTestCondition.Finished
+    handles.playtargetbutton.String = 'Continue to Next Alarm';
+    
+    fprintf('The measured threshold of audibility was: %d dB\n\n', handles.curTestCondition.TargetLevel);
+else
+    disp(handles.curTestCondition.TargetLevel)
+end
+
+handles.isPlaying = false;
+handles.playtargetbutton.Enable = 'on';
+handles.yesbutton.Enable = 'off';
+handles.nobutton.Enable = 'off';
 
 
 % --- Executes on button press in playtargetbutton.
@@ -104,9 +138,7 @@ function playtargetbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to playtargetbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-% play the target signal
-
+%
 % Check if the Test Condition pivot counter exceeds 6 or 8
 %       if it does...
 %           move to the next TestCondition
@@ -114,16 +146,38 @@ function playtargetbutton_Callback(hObject, eventdata, handles)
 %       if it does not...
 %           generate the signal...
 
-% Calls PinkNoiseGenerator and sounds a test signal for the listener
-% Greys out all buttons until signal stops
+if handles.curTestCondition.Finished
+    assignin('base', 'testConditionIndex', evalin('base', 'testConditionIndex + 1'));
+    handles.curTestCondition = evalin('base', 'subject.TestConditions{testConditionIndex}');
+    
+    handles.targetsignaltext.String = ['Alarm File: ' handles.curTestCondition.TargetFile];
+    handles.masklvltext.String = ['Mask Level: ', num2str(handles.curTestCondition.MaskLevel), 'dB'];
+    
+    handles.playtargetbutton.String = 'Play Alarm';
 
+else
+    % Disable all GUI elements
+    handles.playtargetbutton.Enable = 'off';
+    handles.yesbutton.Enable = 'off';
+    handles.nobutton.Enable = 'off';
+    
+    % TODO: MADHUR
+    % Put the signal generation code here
+    % Calls PinkNoiseGenerator and sounds a test signal for the listener
+    %
+    % You can get the audio vector for the current alarm at....
+    %   handles.curTestCondition.Target
+    %
+    % You can get the target (Alarm) level at....
+    %   handles.curTestCondition.TargetLevel
+    %
+    % You can get the mask level at....
+    %   handles.curTestCondition.MaskLevel
+    
+    
+    
+    % Enable the Yes and No buttons
+    handles.yesbutton.Enable = 'on';
+    handles.nobutton.Enable = 'on';
 
-% TODO: MOVE INTO TEST CONDITION OBJECT
-% assignin('base', 'testConditionIndex', evalin('base', 'testConditionIndex + 1'));
-% try
-%     handles.targetsignaltext.String = ['Alarm File: ' evalin('base', 'subject.TestConditions{testConditionIndex}.TargetFile')];
-%     handles.masklvltext.String = ['Mask Level: ', num2str(evalin('base', 'subject.TestConditions{testConditionIndex}.MaskLevel')), 'dB'];
-% catch
-%     disp('Experiment is over mothafukkkkka');
-%     close(gcf);
-% end
+end

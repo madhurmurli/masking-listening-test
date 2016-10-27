@@ -13,7 +13,10 @@ classdef TestConfig
         AlarmFolder = 'alarms';             % Where the medical alarm files can be found
         SubjectsFolder = 'subjects';        % Where the subjects results will be stored
         
+        NumUp = 1;
+        NumDown = 1;
         StepSizeDB = 3;                     % The step size for the 1 up, 1 down experiment
+        NumPivots = 6;
     end
     
     methods

@@ -1,4 +1,4 @@
-classdef TestCondition
+classdef TestCondition < handle & matlab.mixin.SetGet
     %TESTCONDITION - Represents an instance of a test condition that the
     %target signal will be presented in.
     %
@@ -26,6 +26,13 @@ classdef TestCondition
         
         Target;
         TargetLevel;
+        
+        Finished;
+    end
+    
+    properties (SetAccess = protected)
+        Direction;
+        PivotCount;
     end
     
     methods (Static)
@@ -35,6 +42,36 @@ classdef TestCondition
             
             obj.TargetFile = targetFile;
             [obj.Target, obj.TargetFileFs] = audioread(['alarms', filesep, targetFile]);
+            
+            obj.TargetLevel = obj.MaskLevel - 18;
+            
+            obj.Direction = 'Up';
+            obj.PivotCount = 0;
+            obj.Finished = false;
+        end
+    end
+    
+    methods
+        function set.TargetLevel(obj, val)
+            if strcmp(obj.Direction, 'Up') && val < obj.TargetLevel %#ok<*MCSUP>
+                obj.Direction = 'Down';
+                obj.PivotCount = obj.PivotCount + 1;
+                    
+            elseif strcmp(obj.Direction, 'Down') && val > obj.TargetLevel
+                obj.Direction = 'Up';
+                obj.PivotCount = obj.PivotCount + 1;
+                
+            end
+            
+            if obj.PivotCount >= TestConfig.NumPivots
+                obj.Finished = true;
+            end
+            
+            obj.TargetLevel = val;
+        end
+        
+        function val = get.TargetLevel(obj)
+            val = obj.TargetLevel;
         end
     end
 end
