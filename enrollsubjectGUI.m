@@ -22,7 +22,7 @@ function varargout = enrollsubjectGUI(varargin)
 
 % Edit the above text to modify the response to help enrollsubjectGUI
 
-% Last Modified by GUIDE v2.5 26-Oct-2016 18:26:25
+% Last Modified by GUIDE v2.5 26-Oct-2016 22:50:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -129,8 +129,9 @@ function begintestbutton_Callback(hObject, eventdata, handles)
 
 testConditions = generateTestConditions();
 subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
-save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject');
+assignin('base', 'subject', subject);
+assignin('base', 'testConditionIndex', 1);
+%save([TestConfig.SubjectsFolder filesep subject.ID '.mat'], 'subject');
 
 close(gcf)
 listeningtestGUI
-

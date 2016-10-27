@@ -60,6 +60,8 @@ guidata(hObject, handles);
 
 % UIWAIT makes listeningtestGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
+handles.targetsignaltext.String = ['Alarm File: ' evalin('base', 'subject.TestConditions{testConditionIndex}.TargetFile')];
+handles.masklvltext.String = ['Mask Level: ', num2str(evalin('base', 'subject.TestConditions{testConditionIndex}.MaskLevel')), 'dB'];
 
 
 % --- Outputs from this function are returned to the command line.
@@ -80,6 +82,15 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % lower the target by 5 dBfs, load a new target into the test
+assignin('base', 'testConditionIndex', evalin('base', 'testConditionIndex + 1'));
+try
+    handles.targetsignaltext.String = ['Alarm File: ' evalin('base', 'subject.TestConditions{testConditionIndex}.TargetFile')];
+    handles.masklvltext.String = ['Mask Level: ', num2str(evalin('base', 'subject.TestConditions{testConditionIndex}.MaskLevel')), 'dB'];
+catch
+    disp('Experiment is over mothafukkkkka');
+    close(gcf);
+end
+
 
 
 % --- Executes on button press in nobutton.
