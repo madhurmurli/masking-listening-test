@@ -8,7 +8,7 @@ classdef TestConfig
     
     properties (Constant)
         MaskType = 'pink';                  % The type of masking signal
-        MaskLevels = 50; %:5:85;               % The levels of the masking signals
+        MaskLevels = 50:5:85;               % The levels of the masking signals
         
         AlarmFolder = 'alarms';             % Where the medical alarm files can be found
         SubjectsFolder = 'subjects';        % Where the subjects results will be stored
@@ -19,7 +19,16 @@ classdef TestConfig
         NumPivots = 6;
     end
     
-    methods
+    methods (Static)
+        function val = CalibrationLevel(calDB)
+            persistent CalibrationDB;
+            
+            if nargin
+                CalibrationDB = calDB;
+            end
+            
+            val = CalibrationDB;
+        end
     end
     
 end
