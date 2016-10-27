@@ -118,5 +118,5 @@ if isnan(dbspl) || dbspl >= 0
     return
 end
 % if the dbspl is valid pass it to the testconfig
-TestConfig.CalibrationLevel(dbspl);
+testConfig.
 end
