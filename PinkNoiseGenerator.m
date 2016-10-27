@@ -1,10 +1,10 @@
 function out = PinkNoiseGenerator(testSignal,samplingRate,maskerLevel_DBSPL,maskeeLevel_DBSPL)
 fs=samplingRate;
-maskerLevel_DBFS=TestConfig.configurationLevel-maskerLevel_DBSPL;
-maskeeLevel_DBFS=TestConfig.configurationLevel-maskeeLevel_DBSPL;
+maskerLevel_DBFS=TestConfig.CalibrationLevel-maskerLevel_DBSPL;
+maskeeLevel_DBFS=TestConfig.CalibrationLevel-maskeeLevel_DBSPL;
 
-maskerLevel=dbtomag(-1*maskerLevel_DBFS);
-maskeeLevel=dbtomag(-1*maskeeLevel_DBFS);
+maskerLevel=db2mag(-1*maskerLevel_DBFS);
+maskeeLevel=db2mag(-1*maskeeLevel_DBFS);
 
 hpink = dsp.ColoredNoise('Color','pink','SamplesPerFrame',size(testSignal,1)+fs);
 rng default;
