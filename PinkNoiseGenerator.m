@@ -3,8 +3,8 @@ fs=samplingRate;
 maskerLevel_DBFS=TestConfig.configurationLevel-maskerLevel_DBSPL;
 maskeeLevel_DBFS=TestConfig.configurationLevel-maskeeLevel_DBSPL;
 
-maskerLevel=dbtomag(maskerLevel_DBFS);
-maskeeLevel=dbtomag(maskeeLevel_DBFS);
+maskerLevel=dbtomag(-1*maskerLevel_DBFS);
+maskeeLevel=dbtomag(-1*maskeeLevel_DBFS);
 
 hpink = dsp.ColoredNoise('Color','pink','SamplesPerFrame',size(testSignal,1)+fs);
 rng default;
