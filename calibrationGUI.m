@@ -61,6 +61,10 @@ guidata(hObject, handles);
 % UIWAIT makes calibrationGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
+if ~isnan(TestConfig.CalibrationLevel)
+    handles.dbedittext.String = num2str(TestConfig.CalibrationLevel);
+end
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = calibrationGUI_OutputFcn(hObject, eventdata, handles) 
