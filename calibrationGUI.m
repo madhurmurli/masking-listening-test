@@ -84,7 +84,7 @@ function edit1_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function edit1_CreateFcn(hObject, eventdata, handles)
+function dbedittext_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to edit1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -101,7 +101,6 @@ function playtonebutton_Callback(hObject, eventdata, handles)
 % hObject    handle to playtonebutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 % play the sine tone
 CalibrationTone(1000,16000);
 
