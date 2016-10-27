@@ -103,7 +103,7 @@ function playtonebutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % play the sine tone
-CalibrationTone(1000,16000);
+
 
 % --- Executes on button press in okbutton.
 function okbutton_Callback(hObject, eventdata, handles)
@@ -118,6 +118,6 @@ dbspl = str2double(handles.dbedittext.String);
 if isnan(dbspl) || dbspl >= 0
     return
 end
-% TODO: if the dbspl is valid pass it to the testconfig
+% if the dbspl is valid pass it to the testconfig
 
 end
