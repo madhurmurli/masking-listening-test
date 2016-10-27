@@ -16,6 +16,6 @@ testSig=zeros(size(testSignal,1)+fs,1);
 testSig(startIndex:endIndex)=testSignal;
 %testSignal=[zeros(fs/2,1) testSignal zeros(fs/2,1)];
 outAudio=maskerLevel.*pink_noise+maskeeLevel.*testSig;
-soundsc(outAudio,fs);
+sound(outAudio,fs);
 out=1.0;
 end
