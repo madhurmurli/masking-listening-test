@@ -1,7 +1,9 @@
 function out = PinkNoiseGenerator(testSignal,samplingRate,maskerLevel_DBFS,maskeeLevel_DBFS)
 fs=samplingRate;
-   maskerLevel=dbtomag(maskerLevel_DBFS);
-   maskeeLevel=dbtomag(maskeeLevel_DBFS);
+   %maskerLevel=dbtomag(maskerLevel_DBFS);
+   %maskeeLevel=dbtomag(maskeeLevel_DBFS);
+   maskerLevel=0.5;
+   maskeeLevel=0.5;
  hpink = dsp.ColoredNoise('Color','pink','SamplesPerFrame',size(testSignal,1)+fs);
     rng default;
      pink_noise = step(hpink);
