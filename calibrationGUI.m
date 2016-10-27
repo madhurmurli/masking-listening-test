@@ -103,7 +103,7 @@ function playtonebutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % play the sine tone
-
+CalibrationTone(1000,16000);
 
 % --- Executes on button press in okbutton.
 function okbutton_Callback(hObject, eventdata, handles)
