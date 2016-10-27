@@ -188,7 +188,7 @@ else
     % You can get the mask level at....
     %   handles.curTestCondition.MaskLevel
     
-    
+    PinkNoiseGenerator(handles.curTestCondition.Target,handles.curTestCondition.TargetFileFs,handles.curTestCondition.MaskLevel,handles.curTestCondition.TargetLevel)
     
     % Enable the Yes and No buttons
     handles.yesbutton.Enable = 'on';
