@@ -120,4 +120,3 @@ if isnan(dbspl) || dbspl >= 0
 end
 % TODO: if the dbspl is valid pass it to the testconfig
 
-end
