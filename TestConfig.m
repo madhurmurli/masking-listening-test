@@ -17,6 +17,8 @@ classdef TestConfig
         NumDown = 1;
         StepSizeDB = 3;                     % The step size for the 1 up, 1 down experiment
         NumPivots = 6;
+        
+        MinCalibration = 5;
     end
     
     methods (Static)

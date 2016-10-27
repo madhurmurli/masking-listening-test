@@ -91,17 +91,17 @@ function okbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% when the user presses this, get the value from the entered text field and
-% put it where it needs to go... TBD. 
-% then open up the enroll subject window
+% Verify that the Calibration Level exceeds the maximum Mask Level by a
+% defined amount
 dbspl = str2double(handles.dbedittext.String);
-if isnan(dbspl) || dbspl <= 85
+if isnan(dbspl) || dbspl <= max(TestConfig.MaskLevels) + TestConfig.MinCalibration
     return
 end
 
-% if the dbspl is valid pass it to the testconfig
+% Set the Calibration Level in the Test Config
 TestConfig.CalibrationLevel(dbspl);
-% launch enroll subj
+
+% Close the calibration GUI and open the enroll subject GUI
 close(gcf)
 enrollsubjectGUI
 
