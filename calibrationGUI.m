@@ -117,11 +117,9 @@ dbspl = str2double(handles.dbedittext.String);
 if isnan(dbspl) || dbspl >= 85
     return
 end
-<<<<<<< HEAD
+
 % TODO: if the dbspl is valid pass it to the testconfig
 
-=======
 % if the dbspl is valid pass it to the testconfig
 TestConfig.CalibrationLevel(dbspl);
 close(gcf)
->>>>>>> 7dc7f0a353d506ca408a741f4ef4778116acb9a6
