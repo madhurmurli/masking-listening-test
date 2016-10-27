@@ -118,6 +118,6 @@ dbspl = str2double(handles.dbedittext.String);
 if isnan(dbspl) || dbspl >= 0
     return
 end
-% TODO: if the dbspl is valid pass it to the testconfig
+% if the dbspl is valid pass it to the testconfig
 
 end
