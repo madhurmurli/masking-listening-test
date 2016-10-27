@@ -21,12 +21,21 @@ classdef TestConfig
     
     methods (Static)
         function val = CalibrationLevel(calDB)
-            persistent CalibrationDB;
+            % CalibrationLevel - Set/Get the Calibration Level
+            %
+            %   cal = TestConfig.CalibrationLevel(calDB)
+            %       If calDB is passed, the static calibration value will
+            %       be updated and returned if an output variable is given.
+            %
+            %       Without calDB, the static calibration value will just
+            %       be returned.
+            %
+            % ~Evan Shenkman~
             
+            persistent CalibrationDB;
             if nargin
                 CalibrationDB = calDB;
             end
-            
             val = CalibrationDB;
         end
     end
