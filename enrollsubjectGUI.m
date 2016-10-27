@@ -22,7 +22,7 @@ function varargout = enrollsubjectGUI(varargin)
 
 % Edit the above text to modify the response to help enrollsubjectGUI
 
-% Last Modified by GUIDE v2.5 26-Oct-2016 22:50:11
+% Last Modified by GUIDE v2.5 26-Oct-2016 23:53:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -82,6 +82,9 @@ function subjnameedit_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of subjnameedit as text
 %        str2double(get(hObject,'String')) returns contents of subjnameedit as a double
 
+a = 6;
+
+
 
 % --- Executes during object creation, after setting all properties.
 function subjnameedit_CreateFcn(hObject, eventdata, handles)
@@ -126,6 +129,10 @@ function begintestbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % this button should open the listening test gui specific to the subject
+
+if isnan(str2double(handles.subjidnumedit.String))
+    return
+end
 
 testConditions = generateTestConditions();
 subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
