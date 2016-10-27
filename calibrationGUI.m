@@ -114,9 +114,9 @@ function okbutton_Callback(hObject, eventdata, handles)
 % put it where it needs to go... TBD. 
 % then open up the enroll subject window
 dbspl = str2double(handles.dbedittext.String);
-if isnan(dbspl) || dbspl >= 0
+if isnan(dbspl) || dbspl >= 85
     return
 end
 % if the dbspl is valid pass it to the testconfig
 TestConfig.CalibrationLevel(dbspl);
-end
+close(gcf)
