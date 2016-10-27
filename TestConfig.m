@@ -7,11 +7,13 @@ classdef TestConfig
     % Evan Shenkman
     
     properties (Constant)
-        MaskTypes = {'pink'};               % The type of masking signal
+        MaskType = 'pink';                  % The type of masking signal
         MaskLevels = 50:5:85;               % The levels of the masking signals
         
         AlarmFolder = 'alarms';             % Where the medical alarm files can be found
         SubjectsFolder = 'subjects';        % Where the subjects results will be stored
+        
+        StepSizeDB = 3;                     % The step size for the 1 up, 1 down experiment
     end
     
     methods

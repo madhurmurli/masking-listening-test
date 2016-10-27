@@ -34,7 +34,7 @@ classdef TestCondition
             obj.MaskLevel = maskLevel;
             
             obj.TargetFile = targetFile;
-            %[obj.Target, obj.TargetFileFs] = audioread(['alarms', filesep, targetFile]);
+            [obj.Target, obj.TargetFileFs] = audioread(['alarms', filesep, targetFile]);
         end
     end
 end

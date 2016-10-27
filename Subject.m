@@ -23,7 +23,7 @@ classdef Subject < handle
             obj.Name = name;
             obj.ID = id;
             
-            obj.TestConditions = tc;
+            obj.TestConditions = tc(randperm(length(tc)));
         end
         
     end
