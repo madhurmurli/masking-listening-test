@@ -137,9 +137,11 @@ if isnan(str2double(handles.subjidnumedit.String))
 else
     testConditions = generateTestConditions();
     subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
+    graphPlotter=GraphPlotter(handles.subjnameedit.String,handles.subjidnumedit.String);
     assignin('base', 'subject', subject);
     assignin('base', 'testConditionIndex', 1);
-
+    assignin('base','graphPlotter',graphPlotter);
+    
     handles.begintestbutton.Enable = 'on';
     close(gcf)
     listeningtestGUI

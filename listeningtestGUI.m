@@ -71,7 +71,13 @@ guidata(hObject, handles);
 assignin('base', 'curTestCondition', handles.curTestCondition);
 handles.targetsignaltext.String = ['Alarm File: ' handles.curTestCondition.TargetFile];
 handles.masklvltext.String = ['Mask Level: ', num2str(handles.curTestCondition.MaskLevel), 'dB'];
+handles.graphPlotter = evalin('base', 'graphPlotter');
+assignin('base', 'graphPlotter', handles.graphPlotter);
 
+
+ f=figure();
+ movegui(f,'west');
+ handles.graphPlotter.SetFigureHandle(f);
 
 % --- Outputs from this function are returned to the command line.
 function varargout = listeningtestGUI_OutputFcn(hObject, eventdata, handles) 
@@ -94,8 +100,13 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % Set the TargetLevel to 3dB lower than the preivous state
 % Increment the 1up, 1down pivot counter
 
+
 % Store the Subject's response
 handles.curTestCondition.storeResponse(true);
+%Plot to graph
+currentTestCondition=handles.curTestCondition.getResponses();
+handles.graphPlotter = evalin('base', 'graphPlotter');
+handles.graphPlotter.PlotPoints(currentTestCondition);
 
 % Decrement the Target Level
 handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel - TestConfig.NumDown * TestConfig.StepSizeDB;
@@ -134,6 +145,10 @@ handles.curTestCondition.storeResponse(false);
 % Increment the Target Level
 handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel + TestConfig.NumUp * TestConfig.StepSizeDB;
 
+%Plot Graph
+currentTestCondition=handles.curTestCondition.getResponses();
+handles.graphPlotter = evalin('base', 'graphPlotter');
+handles.graphPlotter.PlotPoints(currentTestCondition);
 % Check if we've finished
 if handles.curTestCondition.Finished
     fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);

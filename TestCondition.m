@@ -110,6 +110,9 @@ classdef TestCondition < handle & matlab.mixin.SetGet
             
             obj.Finished = val;
         end
+        function r=getResponses(obj)
+            r=obj.Responses;
+        end
     end
 end
 
