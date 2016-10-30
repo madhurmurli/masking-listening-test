@@ -114,7 +114,7 @@ handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel - Te
 % Check if we've finished
 if handles.curTestCondition.Finished
     fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
-    
+    clf(handles.graphPlotter.FigureHandle);
     if evalin('base', 'testConditionIndex == length(subject.TestConditions)')
         handles.playtargetbutton.String = 'Finish Experiment';
         handles.isOver = true;
@@ -202,20 +202,8 @@ else
     handles.playtargetbutton.Enable = 'off';
     handles.yesbutton.Enable = 'off';
     handles.nobutton.Enable = 'off';
-    
-    % TODO: MADHUR
-    % Put the signal generation code here
-    % Calls PinkNoiseGenerator and sounds a test signal for the listener
-    %
-    % You can get the audio vector for the current alarm at....
-    %   handles.curTestCondition.Target
-    %
-    % You can get the target (Alarm) level at....
-    %   handles.curTestCondition.TargetLevel
-    %
-    % You can get the mask level at....
-    %   handles.curTestCondition.MaskLevel
-    
+ 
+    %Generate Noise+Signal
     PinkNoiseGenerator(handles.curTestCondition.Target,handles.curTestCondition.TargetFileFs,handles.curTestCondition.MaskLevel,handles.curTestCondition.TargetLevel)
     
     % Enable the Yes and No buttons
