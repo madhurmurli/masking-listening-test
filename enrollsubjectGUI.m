@@ -52,6 +52,8 @@ function enrollsubjectGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to enrollsubjectGUI (see VARARGIN)
 
+assignin('base', 'enrollGUI', hObject);
+
 % Choose default command line output for enrollsubjectGUI
 handles.output = hObject;
 

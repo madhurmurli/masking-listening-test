@@ -33,6 +33,8 @@ classdef TestCondition < handle & matlab.mixin.SetGet
     properties (SetAccess = protected)
         Direction;
         PivotCount;
+        Responses;
+        Threshold;
     end
     
     methods (Static)
@@ -48,10 +50,16 @@ classdef TestCondition < handle & matlab.mixin.SetGet
             obj.Direction = 'Up';
             obj.PivotCount = 0;
             obj.Finished = false;
+            
+            obj.Responses = cell(1,0);
         end
     end
     
     methods
+        function storeResponse(obj, detected)
+            obj.Responses{length(obj.Responses) + 1} = Response(obj.TargetLevel, detected);
+        end
+        
         function set.TargetLevel(obj, val)
             if strcmp(obj.Direction, 'Up') && val < obj.TargetLevel %#ok<*MCSUP>
                 obj.Direction = 'Down';
@@ -72,6 +80,35 @@ classdef TestCondition < handle & matlab.mixin.SetGet
         
         function val = get.TargetLevel(obj)
             val = obj.TargetLevel;
+        end
+        
+        function set.Finished(obj, val)
+            if val == true
+                % The number of pivots have been reached
+                level = obj.MaskLevel - TestConfig.TargetStartOffset;
+                while true
+                    plusCount = 0;
+                    minusCount = 0;
+                    for i = 1:length(obj.Responses)
+                        if obj.Responses{i}.Level == level
+                            if obj.Responses{i}.Detected
+                                plusCount = plusCount + 1;
+                            else
+                                minusCount = minusCount + 1;
+                            end
+                        end
+                    end
+                    
+                    if plusCount >= minusCount
+                        obj.Threshold = level;
+                        break;
+                    else
+                        level = level + TestConfig.StepSizeDB;
+                    end
+                end
+            end
+            
+            obj.Finished = val;
         end
     end
 end

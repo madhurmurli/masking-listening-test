@@ -52,6 +52,8 @@ function calibrationGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to calibrationGUI (see VARARGIN)
 
+assignin('base', 'calGUI', hObject);
+
 % Choose default command line output for calibrationGUI
 handles.output = hObject;
 

@@ -22,7 +22,7 @@ function varargout = listeningtestGUI(varargin)
 
 % Edit the above text to modify the response to help listeningtestGUI
 
-% Last Modified by GUIDE v2.5 27-Oct-2016 13:34:20
+% Last Modified by GUIDE v2.5 29-Oct-2016 19:58:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -51,6 +51,8 @@ function listeningtestGUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to listeningtestGUI (see VARARGIN)
+
+assignin('base', 'listeningGUI', hObject);
 
 % Choose default command line output for listeningtestGUI
 handles.output = hObject;
@@ -92,21 +94,27 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % Set the TargetLevel to 3dB lower than the preivous state
 % Increment the 1up, 1down pivot counter
 
+% Store the Subject's response
+handles.curTestCondition.storeResponse(true);
+
+% Decrement the Target Level
 handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel - TestConfig.NumDown * TestConfig.StepSizeDB;
 
+% Check if we've finished
 if handles.curTestCondition.Finished
+    fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
+    
     if evalin('base', 'testConditionIndex == length(subject.TestConditions)')
         handles.playtargetbutton.String = 'Finish Experiment';
         handles.isOver = true;
     else
         handles.playtargetbutton.String = 'Continue to Next Alarm';
     end
-    
-    fprintf('The measured threshold of audibility was: %d dB\n\n', handles.curTestCondition.TargetLevel);
 else
-    disp(handles.curTestCondition.TargetLevel)
+    fprintf('Next Target Level: %d dB\n\n', handles.curTestCondition.TargetLevel);
 end
 
+% Reset GUI to Play Alarm state
 handles.isPlaying = false;
 handles.playtargetbutton.Enable = 'on';
 handles.yesbutton.Enable = 'off';
@@ -120,23 +128,28 @@ function nobutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Set the TargetLevel to 3dB higher than the preivous state
+% Store the Subject's response
+handles.curTestCondition.storeResponse(false);
 
+% Increment the Target Level
 handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel + TestConfig.NumUp * TestConfig.StepSizeDB;
 
+% Check if we've finished
 if handles.curTestCondition.Finished
+    fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
+    
     if evalin('base', 'testConditionIndex == length(subject.TestConditions)')
         handles.playtargetbutton.String = 'Finish Experiment';
         handles.isOver = true;
     else
         handles.playtargetbutton.String = 'Continue to Next Alarm';
     end
-    
-    fprintf('The measured threshold of audibility was: %d dB\n\n', handles.curTestCondition.TargetLevel);
 else
-    disp(handles.curTestCondition.TargetLevel)
+    fprintf('Next Target Level: %d dB\n\n', handles.curTestCondition.TargetLevel);
 end
 
+% Reset GUI to Play Alarm state
+handles.isPlaying = false;
 handles.playtargetbutton.Enable = 'on';
 handles.yesbutton.Enable = 'off';
 handles.nobutton.Enable = 'off';
@@ -195,3 +208,14 @@ else
     handles.nobutton.Enable = 'on';
 
 end
+
+
+% --- Executes on button press in panicbutton.
+function panicbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to panicbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.isPlaying = false;
+handles.playtargetbutton.Enable = 'on';
+handles.yesbutton.Enable = 'off';
+handles.nobutton.Enable = 'off';

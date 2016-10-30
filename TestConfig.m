@@ -8,7 +8,8 @@ classdef TestConfig
     
     properties (Constant)
         MaskType = 'pink';                  % The type of masking signal
-        MaskLevels = 50:5:85;               % The levels of the masking signals
+        MaskLevels = 50:15:85;             % The levels of the masking signals
+        TargetStartOffset = 18;             % How many dB lower than the mask will the target start at
         
         AlarmFolder = 'alarms';             % Where the medical alarm files can be found
         SubjectsFolder = 'subjects';        % Where the subjects results will be stored
@@ -29,8 +30,8 @@ classdef TestConfig
             %       If calDB is passed, the static calibration value will
             %       be updated and returned if an output variable is given.
             %
-            %       Without calDB, the static calibration value will just
-            %       be returned.
+            %       Without the calDB argument, the static calibration
+            %       value will just be returned.
             %
             % ~Evan Shenkman~
             
