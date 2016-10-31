@@ -28,6 +28,7 @@ classdef CSVWriter < handle
             obj.FileName=fname;
             obj.MaskerLevel=mlevel;
             obj.IdentifiedThreshold=thresh;
+            csvwrite('output.csv',[obj.Name obj.ID obj.MaskerLevel obj.IndentifiedThreshold]);
             
         end
     end
