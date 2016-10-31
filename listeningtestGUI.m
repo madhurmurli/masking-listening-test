@@ -73,7 +73,8 @@ handles.targetsignaltext.String = ['Alarm File: ' handles.curTestCondition.Targe
 handles.masklvltext.String = ['Mask Level: ', num2str(handles.curTestCondition.MaskLevel), 'dB'];
 handles.graphPlotter = evalin('base', 'graphPlotter');
 assignin('base', 'graphPlotter', handles.graphPlotter);
-
+handles.csvwriter = evalin('base', 'csvwriter');
+assignin('base', 'csvwriter', handles.csvwriter);
 
  f=figure();
  movegui(f,'west');
@@ -114,6 +115,7 @@ handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel - Te
 % Check if we've finished
 if handles.curTestCondition.Finished
     fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
+    handles.
     clf(handles.graphPlotter.FigureHandle);
     if evalin('base', 'testConditionIndex == length(subject.TestConditions)')
         handles.playtargetbutton.String = 'Finish Experiment';
@@ -149,10 +151,12 @@ handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel + Te
 currentTestCondition=handles.curTestCondition.getResponses();
 handles.graphPlotter = evalin('base', 'graphPlotter');
 handles.graphPlotter.PlotPoints(currentTestCondition);
+handles.csvwriter=evalin('base','csvwriter');
+
 % Check if we've finished
 if handles.curTestCondition.Finished
     fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
-    
+    handles.csvwriter.()
     if evalin('base', 'testConditionIndex == length(subject.TestConditions)')
         handles.playtargetbutton.String = 'Finish Experiment';
         handles.isOver = true;
