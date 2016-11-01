@@ -117,6 +117,7 @@ function yesbutton_Callback(hObject, eventdata, handles)
 % Set the TargetLevel to 3dB lower than the preivous state
 % Increment the 1up, 1down pivot counter
 
+
 % Store the Subject's response
 handles.curTestCondition.storeResponse(true);
 
@@ -161,7 +162,6 @@ handles.yesbutton.Enable = 'off';
 handles.nobutton.Enable = 'off';
 
 % Make sure the GUI updates itself
-guidata(handles.figure1, handles);
 drawnow
 
 
@@ -212,7 +212,6 @@ handles.yesbutton.Enable = 'off';
 handles.nobutton.Enable = 'off';
 
 % Make sure the GUI updates itself
-guidata(handles.figure1, handles);
 drawnow
 
 
@@ -262,8 +261,8 @@ elseif handles.curTestCondition.Finished
     % Set the GUI to the Play Alarm State
     handles.playtargetbutton.String = 'Play Alarm';
     handles.playtargetbutton.Enable = 'on';
-    handles.yesbutton.Enable = 'off';
-    handles.nobutton.Enable = 'off';
+    handles.yesbutton.Enable = 'on';
+    handles.nobutton.Enable = 'on';
 
 % Neither the experiment or test condition is over
 else
@@ -282,7 +281,7 @@ else
 
 end
 
-guidata(handles.figure1, handles);
+guidata(handles., handles);
 drawnow;
 
 
@@ -295,7 +294,3 @@ handles.isPlaying = false;
 handles.playtargetbutton.Enable = 'on';
 handles.yesbutton.Enable = 'off';
 handles.nobutton.Enable = 'off';
-
-% Make sure the GUI updates itself
-guidata(handles.figure1, handles);
-drawnow
