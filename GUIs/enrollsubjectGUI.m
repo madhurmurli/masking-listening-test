@@ -138,11 +138,9 @@ else
     testConditions = generateTestConditions();
     subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
     graphPlotter=GraphPlotter(handles.subjnameedit.String,handles.subjidnumedit.String);
-    csvwriter=CSVWriter(handles.subjnameedit.String,handles.subjidnumedit.String);
     assignin('base', 'subject', subject);
     assignin('base', 'testConditionIndex', 1);
     assignin('base','graphPlotter',graphPlotter);
-    assignin('base','csvwriter',csvwriter);
 
     handles.begintestbutton.Enable = 'on';
     close(gcf)

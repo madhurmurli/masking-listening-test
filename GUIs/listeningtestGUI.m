@@ -69,7 +69,7 @@ handles.curTestConditionIndex = 1;
 handles.curTestCondition = handles.Subject.TestConditions{handles.curTestConditionIndex};
 handles.isOver = false;
 assignin('base', 'curTestCondition', handles.curTestCondition);
-
+assignin('base', 'subject',handles.Subject);
 % Disable the subject response buttons
 handles.yesbutton.Enable = 'off';
 handles.nobutton.Enable = 'off';
@@ -86,9 +86,7 @@ f=figure();
 movegui(f,'west');
 handles.graphPlotter.SetFigureHandle(f);
 
-% Create a CSVWriter object - in gui and base
-handles.csvwriter = evalin('base', 'csvwriter');
-assignin('base', 'csvwriter', handles.csvwriter);
+
 
 % Update handles structure
 guidata(hObject, handles);
@@ -135,7 +133,10 @@ if handles.curTestCondition.Finished
     
     % Clear the graphPlotter figure
     clf(handles.graphPlotter.FigureHandle);
-    
+    %Write Result to csv
+    handles.Subject = evalin('base', 'subject');
+    r=writeToCSV(handles.Subject.Name,handles.Subject.ID,handles.curTestCondition.TargetFile,handles.curTestCondition.MaskLevel,handles.curTestCondition.Threshold);
+
     % Check if this was the last test condition
     if handles.curTestConditionIndex == length(handles.Subject.TestConditions)
         % Change the gui to the finished state
@@ -187,6 +188,9 @@ if handles.curTestCondition.Finished
     % Print determined threshold -- debug
     fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
        clf(handles.graphPlotter.FigureHandle);
+     %Write Results to file
+   handles.Subject = evalin('base', 'subject');
+    r=writeToCSV(handles.Subject.Name,handles.Subject.ID,handles.curTestCondition.TargetFile,handles.curTestCondition.MaskLevel,handles.curTestCondition.Threshold);
 
     % Check if this was the last test condition
     if handles.curTestConditionIndex == length(handles.Subject.TestConditions)
