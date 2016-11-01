@@ -186,7 +186,8 @@ handles.curTestCondition.TargetLevel = handles.curTestCondition.TargetLevel + Te
 if handles.curTestCondition.Finished
     % Print determined threshold -- debug
     fprintf('The measured threshold of audility: %d dB\n\n', handles.curTestCondition.Threshold);
-    
+       clf(handles.graphPlotter.FigureHandle);
+
     % Check if this was the last test condition
     if handles.curTestConditionIndex == length(handles.Subject.TestConditions)
         % Change the gui to the finished state
