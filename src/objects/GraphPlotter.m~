@@ -12,7 +12,7 @@ classdef GraphPlotter < handle
     properties (SetAccess = private)
         Name;                       % Name of the subject
         ID;                         % An ID for the subject
-        FigureHandle;               % Handle to the Figure on which to plot
+        FigureHandle                % Handle to the Figure on which to plot
         % Whatever other information we want....
         
         PlotPointsX;             % Cell array of Plot Points
@@ -25,12 +25,29 @@ classdef GraphPlotter < handle
             obj.Name = name;
             obj.ID = id;
             
-            obj.FigureHandle = figure();
-            movegui(obj.FigureHandle,'west');
+            obj.FigureHandle = figure;
+            obj.FigureHandle.set('Markersize', '18');
         end
         
-        function setFigureHandle(obj,figHandle)
-            obj.FigureHandle=figHandle;
+%         function SetFigureHandle(obj,figHandle)
+%             obj.FigureHandle=figHandle;
+%         end
+        
+        function AddPlot2(obj, x, y, type)
+            % Bring the Plot Figure to the foreground
+            figure(obj.FigureHandle);
+            
+            % Change the point that's being plotted
+            if(type == 1)
+                plot(x, y, 'b--o');
+                
+            elseif(type == 2)
+                plot(x, y, 'g+');
+                
+            elseif(type == 3)
+                plot(x, y, 'r*');
+                
+            end
         end
         
         function PlotPoints(obj, responses)
@@ -40,27 +57,26 @@ classdef GraphPlotter < handle
             ylabel('SPL (dB)');
             title(['Audibility Threshold ' obj.Name '-' obj.ID ]);
             
-            % Resize the X-axis as responses come in
             varXaxis = length(responses);
             if varXaxis < 10
                 varXaxis = 10;
-            else
-                varXaxis = 5 * floor(varXaxis/5) + 5;
-            end
+            elseif mod(varXaxis, 5) == 0
+                varXaxis = varXaxis + 5;
+                
+            
+            axis([0 (floor(length(responses)/5)+5) 30 100]);
             
             for i = 1:size(responses, 2)
                 if responses{i}.Detected
-                     plot(i, responses{i}.Level, 'g+', 'MarkerSize', 18);
+                     plot(i, responses{i}.Level, 'g+');
                      
                 else
-                     plot(i,responses{i}.Level,'r*', 'MarkerSize', 18);
+                     plot(i,responses{i}.Level,'r*');
 
                 end
                 
                 hold on;
             end
-            
-            axis([0 varXaxis 30 100]);
         end
     end
     

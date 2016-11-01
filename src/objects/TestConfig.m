@@ -8,7 +8,7 @@ classdef TestConfig
     
     properties (Constant)
         MaskType = 'pink';                  % The type of masking signal
-        MaskLevels = 50:15:85;             % The levels of the masking signals
+        MaskLevels = 80:15:85;             % The levels of the masking signals
         TargetStartOffset = 18;             % How many dB lower than the mask will the target start at
         
         AlarmFolder = 'alarms';             % Where the medical alarm files can be found

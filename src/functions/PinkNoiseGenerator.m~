@@ -9,30 +9,17 @@ function out = PinkNoiseGenerator(testSignal, samplingRate, maskerLevel_DBSPL, m
     maskerLevel=db2mag(-1*maskerLevel_DBFS);
     maskeeLevel=db2mag(-1*maskeeLevel_DBFS);
 
-    % Create a Colored Noise generator
+    % Create a Colored
     hpink = dsp.ColoredNoise('Color', TestConfig.MaskType, 'SamplesPerFrame', size(testSignal,1)+fs);
-    
-    % Setup the Random Number Generator
     rng default;
-    
-    % Generate the pink noise sequence
     pink_noise = step(hpink);
-    
-    % Normalize
     pink_noise=pink_noise./max(abs(pink_noise));
-    
-    % TODO: what?
     startIndex=fs/2+1;
-    
-    % Generate Audio Output
-    testSig = zeros(size(testSignal,1)+fs,1);
-    testSig(startIndex:startIndex+length(testSignal)-1) = testSignal(:,1);
-    
-    % Mix in Pink Noise
-    outAudio = maskerLevel .* pink_noise + maskeeLevel .* testSig;
-    
-    % Play Audio
+    endIndex=startIndex+size(testSignal,1)-1;
+    testSig=zeros(size(testSignal,1)+fs,1);
+    testSig(startIndex:endIndex)=testSignal;
+    %testSignal=[zeros(fs/2,1) testSignal zeros(fs/2,1)];
+    outAudio=maskerLevel.*pink_noise+maskeeLevel.*testSig;
     sound(outAudio,fs);
-    
     out=1.0;
 end

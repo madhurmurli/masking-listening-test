@@ -82,9 +82,9 @@ handles.masklvltext.String = ['Mask Level: ', num2str(handles.curTestCondition.M
 handles.graphPlotter = evalin('base', 'graphPlotter');
 assignin('base', 'graphPlotter', handles.graphPlotter);
 
-f=figure();
-movegui(f,'west');
-handles.graphPlotter.setFigureHandle(f);
+%f=figure();
+%movegui(f,'west');
+%handles.graphPlotter.FigureHandle = f;
 
 % Update handles structure
 guidata(hObject, handles);
