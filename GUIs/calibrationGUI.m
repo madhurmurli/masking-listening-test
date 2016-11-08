@@ -96,7 +96,7 @@ function okbutton_Callback(hObject, eventdata, handles)
 % Verify that the Calibration Level exceeds the maximum Mask Level by a
 % defined amount
 dbspl = str2double(handles.dbedittext.String);
-if isnan(dbspl) || dbspl <= max(TestConfig.MaskLevels) + TestConfig.MinCalibration
+if isnan(dbspl) || dbspl < max(TestConfig.MaskLevels) + TestConfig.MinCalibration
     return
 end
 

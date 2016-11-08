@@ -8,13 +8,13 @@ classdef TestConfig
     
     properties (Constant)
         MaskType = 'pink';                  % The type of masking signal
-        MaskLevels = 80:15:85;             % The levels of the masking signals
-        TargetStartOffset = 18;             % How many dB lower than the mask will the target start at
+        MaskLevels = 50:5:85;               % The levels of the masking signals
+        TargetStartOffset = 9;              % How many dB ABOVE than the mask will the target start at
         
         AlarmFolder = 'alarms';             % Where the medical alarm files can be found
         SubjectsFolder = 'subjects';        % Where the subjects results will be stored
         
-        NumUp = 1;
+        NumUp = 2;
         NumDown = 1;
         StepSizeDB = 3;                     % The step size for the 1 up, 1 down experiment
         NumPivots = 6;

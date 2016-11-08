@@ -135,6 +135,8 @@ if isnan(str2double(handles.subjidnumedit.String))
     handles.begintestbutton.Enable = 'on';
     
 else
+    thisGUI = gcf;
+    
     testConditions = generateTestConditions();
     subject = Subject(handles.subjnameedit.String, handles.subjidnumedit.String, testConditions);
     graphPlotter=GraphPlotter(handles.subjnameedit.String,handles.subjidnumedit.String);
@@ -143,6 +145,6 @@ else
     assignin('base','graphPlotter',graphPlotter);
 
     handles.begintestbutton.Enable = 'on';
-    close(gcf)
+    close(thisGUI);
     listeningtestGUI
 end

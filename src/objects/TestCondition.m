@@ -31,6 +31,7 @@ classdef TestCondition < handle & matlab.mixin.SetGet
     end
     
     properties (SetAccess = protected)
+        InitialDescent;
         Direction;
         PivotCount;
         Responses;
@@ -45,9 +46,10 @@ classdef TestCondition < handle & matlab.mixin.SetGet
             obj.TargetFile = targetFile;
             [obj.Target, obj.TargetFileFs] = audioread(['alarms', filesep, targetFile]);
             
-            obj.TargetLevel = obj.MaskLevel - 18;
+            obj.TargetLevel = obj.MaskLevel + TestConfig.TargetStartOffset;
             
-            obj.Direction = 'Up';
+            obj.InitialDescent = true;
+            obj.Direction = 'Down';
             obj.PivotCount = 0;
             obj.Finished = false;
             
@@ -67,9 +69,14 @@ classdef TestCondition < handle & matlab.mixin.SetGet
                     
             elseif strcmp(obj.Direction, 'Down') && val > obj.TargetLevel
                 obj.Direction = 'Up';
-                obj.PivotCount = obj.PivotCount + 1;
                 
-            end
+                if obj.InitialDescent
+                    obj.InitialDescent = false;
+                else
+                    obj.PivotCount = obj.PivotCount + 1;
+                end
+                
+            end 
             
             if obj.PivotCount >= TestConfig.NumPivots
                 obj.Finished = true;
