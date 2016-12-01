@@ -19,13 +19,14 @@ for j=1:total_alarms
     counter1=1;
     counter2=1;
     counter3=1;
+    counter4=1;
     for i=1:total_iterations
         cur_ind=i-1;
         mlevel=str2double(out{cur_ind*5+4});
         threshold=str2double(out{cur_ind*5+5});
         alarm=out{cur_ind*5+3};
         user_id=str2num(out{cur_ind*5+2});
-        tml=threshold/mlevel;
+        tml=mlevel-threshold;
     
         if(strcmp(alarm,file_name))
             if(user_id==1)
@@ -38,8 +39,12 @@ for j=1:total_alarms
                 counter2=counter2+1;
             elseif(user_id==3)
                 x(user_id,counter3)=mlevel;
-                y(user_id,counter3)=mlevel;
+                y(user_id,counter3)=threshold;
                 counter3=counter3+1;
+              elseif(user_id==4)
+                x(user_id,counter4)=mlevel;
+                y(user_id,counter4)=threshold;
+                counter4=counter4+1;
             end
             
             temp=table(user_id,file_string,mlevel,threshold,mlevel-threshold);
@@ -76,7 +81,7 @@ end
 %%
 %ANova2
 s=table2array(anova2_table(:,2));
-[p,tbl]=anova2(s,12);
+[p,tbl]=anova2(s,16);
 
 %%
 %Useful Graphs
@@ -84,15 +89,15 @@ s=table2array(anova2_table(:,2));
 avg_list=[];
 for i=1:total_alarms
     mean=0;
-    for j=1:12
+    for j=1:16
         ind=(i-1)*total_alarms+j;
         mean=mean+s(ind,1);
     end
-    mean=mean/12;
+    mean=mean/16;
     
     avg_list=[avg_list mean];
 end
  bar(avg_list);
-ylabel('Threshold to Mask Level (dB)');
+ylabel('Mask to Threshold Level (dB)');
 %legend('1-Cardio','2-Drug','3-FastGA','4-Gen','5-Oxy','6-Perf','7-Pow','8-Temp','9-Vent' );
 
