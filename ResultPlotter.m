@@ -8,9 +8,11 @@ data_table=cell2table(cell(0,5),'VariableNames',{'UserId','FileName','MaskerLeve
 anova_table=cell2table(cell(0,3),'VariableNames',{'FileName','meas1','meas2'});
 anova2_table=cell2table(cell(0,2),'VariableNames',{'FileName','TML'});
 tablecounter=0;
+filenames=[];
 for j=1:total_alarms
     file_name= audio_files(j,1).name;
     file_string=string(file_name);
+    filenames=[filenames ; file_string];
    % figure();
     x=zeros(3,4);
     y=zeros(3,4);  
@@ -74,5 +76,23 @@ end
 %%
 %ANova2
 s=table2array(anova2_table(:,2));
-[p,tbl]=anova2(s,2);
+[p,tbl]=anova2(s,12);
+
+%%
+%Useful Graphs
+%Average tml per alarm
+avg_list=[];
+for i=1:total_alarms
+    mean=0;
+    for j=1:12
+        ind=(i-1)*total_alarms+j;
+        mean=mean+s(ind,1);
+    end
+    mean=mean/12;
+    
+    avg_list=[avg_list mean];
+end
+ bar(avg_list);
+ylabel('Threshold to Mask Level (dB)');
+%legend('1-Cardio','2-Drug','3-FastGA','4-Gen','5-Oxy','6-Perf','7-Pow','8-Temp','9-Vent' );
 
